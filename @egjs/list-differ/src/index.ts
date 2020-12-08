@@ -1,24 +1,8 @@
-console.log('Try npm run lint/fix!');
+import ListDiffer from './components/ListDiffer';
 
-const longString =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut aliquet diam.';
+// prevKeys: [1, 2, 3, 4], newKeys: [2, 1, 6, 4, 8]
 
-const trailing = 'Semicolon';
-
-const why = 'am I tabbed?';
-
-export function doSomeStuff(
-  withThis: string,
-  andThat: string,
-  andThose: string[]
-) {
-  //function on one line
-  if (!andThose.length) {
-    return false;
-  }
-  console.log(withThis);
-  console.log(andThat);
-  console.dir(andThose);
-  return;
-}
-// TODO: more examples
+const listDiffer = new ListDiffer([1, 2, 3, 4]);
+const result = listDiffer.update([2, 1, 6, 4, 8]);
+console.log(result);
+export default ListDiffer;
