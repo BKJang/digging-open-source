@@ -1,6 +1,6 @@
 # digging-open-source
 
-🔍 Purpose
+## 🔍 Purpose
 
 - Open Source를 분석하기
 - Clone Coding 해보기
