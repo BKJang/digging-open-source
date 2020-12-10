@@ -41,16 +41,26 @@ export function diff<T>(prevList: T[], list: T[]): DiffResult<T> {
   // const changedBeforeAdded:[][] = [];
 
   prevKeys.forEach((key, index) => {
-    
+    prevKeyMap.set(key, index);
   });
-  console.log('hellow diff')
+  keys.forEach((key, index) => {
+    keyMap.set(key, index);
+  })
 
+  prevKeys.forEach((key, prevListIndex) => {
+    const listIndex = keyMap.get(key);
+    if (typeof listIndex === 'undefined') {
+      removed.push(prevListIndex);
+    } else {
+      // TODO: 삭제 안된 데이터 removeMap 에 담기
+    }
+  })
 
   return {
     prevList,
     list,
+    removed,
     added: [],
-    removed: [],
     changed: [],
     maintained: [],
     // ordered: [],
