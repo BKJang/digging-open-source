@@ -5,6 +5,7 @@ interface DiffResult<T> {
   removed: number[];
   changed: number[][];
   maintained: number[][];
+  // fixed: boolean[];
   // ordered: number[][];
   // pureChanged: number[][];
 }
@@ -35,9 +36,9 @@ export function diff<T>(prevList: T[], list: T[]): DiffResult<T> {
   const keys = list.map(callback);
   const added:number[] = [];
   const removed:number[] = [];
-  const maintained:[][] = [];
+  const maintained:number[][] = [];
   const fixed:boolean[] = [];
-  const changed:[][] = [];
+  const changed:number[][] = [];
   // const changedBeforeAdded:[][] = [];
 
   prevKeys.forEach((key, index) => {
@@ -56,13 +57,28 @@ export function diff<T>(prevList: T[], list: T[]): DiffResult<T> {
     }
   })
 
+  keys.forEach((key, listIndex) => {
+    const prevIndex = prevKeyMap.get(key);
+    if (typeof prevIndex === 'undefined') {
+      added.push(listIndex);
+    } else {
+      maintained.push([prevIndex, listIndex]);
+      // TODO: changedBeforeAdded
+      fixed.push(prevIndex === listIndex);
+      if(prevIndex !== listIndex) {
+        changed.push([prevIndex, listIndex]);
+      }
+    }
+  })
+
   return {
     prevList,
     list,
     removed,
-    added: [],
-    changed: [],
-    maintained: [],
+    added,
+    maintained,
+    changed,
+    // fixed,
     // ordered: [],
     // pureChanged: [],
   }
